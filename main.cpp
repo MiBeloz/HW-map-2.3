@@ -60,12 +60,11 @@ int main() {
 void swap(Data& obj_one, Data& obj_two) {
 	std::unique_lock ul1(obj_one.get_mtx(), std::defer_lock);
 	std::unique_lock ul2(obj_two.get_mtx(), std::defer_lock);
+	std::lock(ul1, ul2);
 
 	int i = obj_one.get_int();
 	double d = obj_one.get_double();
 
 	obj_one.set(obj_two.get_int(), obj_two.get_double());
 	obj_two.set(i, d);
-
-	std::lock(ul1, ul2);
 }
